@@ -87,12 +87,6 @@
 .catalog-product-edit .user-defined.type-select select {
   width: 100%;
 }
-#tab_content_downloadableInfo .data-table td {
-  vertical-align: top;
-}
-#tab_content_downloadableInfo .data-table td .row {
-  margin-bottom: 10px;
-}
 /*
     Customer
 ---------------------------------------*/
@@ -1335,12 +1329,6 @@
 .checkout-index-index .checkout-errors .fieldset-wrapper-title .actions .action-delete {
   margin: 13px 0 0;
 }
-.sales-order-create-index .ui-dialog .downloadable.information .link .label {
-  margin-left: 0;
-}
-.sales-order-create-index .ui-dialog .downloadable.information .link .nested {
-  margin-left: 8px;
-}
 .sales-order-create-index .ui-dialog .fieldset.bundle .nested {
   padding-left: 6px;
 }
@@ -2336,19 +2324,11 @@ table.items-to-invoice tbody tr:hover td {
 .tax-rate-popup .field:after,
 .clearfix:before,
 .clearfix:after,
-#tab_content_downloadableInfo .data-table td .row:before,
-#tab_content_downloadableInfo .data-table td .row:after {
-  content: "";
-  display: table;
-}
 .shopping-cart-items:after,
 .image-panel:after,
 .images:after,
 .tax-rate-popup .field:after,
 .clearfix:after,
-#tab_content_downloadableInfo .data-table td .row:after {
-  clear: both;
-}
 .debug {
   border: 1px solid red !important;
 }

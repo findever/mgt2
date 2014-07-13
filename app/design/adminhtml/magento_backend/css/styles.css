@@ -9126,12 +9126,6 @@ table .col-draggable .draggable-handle {
 .checkout-index-index .checkout-errors .fieldset-wrapper-title .actions .action-delete {
   margin: 13px 0 0;
 }
-.sales-order-create-index .ui-dialog .downloadable.information .link .label {
-  margin-left: 0;
-}
-.sales-order-create-index .ui-dialog .downloadable.information .link .nested {
-  margin-left: 8px;
-}
 .sales-order-create-index .ui-dialog .fieldset.bundle .nested {
   padding-left: 6px;
 }

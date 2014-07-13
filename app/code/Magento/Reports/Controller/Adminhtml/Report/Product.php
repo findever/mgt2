@@ -201,56 +201,6 @@ class Product extends AbstractReport
         return $this->_fileFactory->create($fileName, $exportBlock->getExcelFile());
     }
 
-    /**
-     * Downloads action
-     *
-     * @return void
-     */
-    public function downloadsAction()
-    {
-        $this->_title->add(__('Downloads Report'));
-
-        $this->_initAction()
-            ->_setActiveMenu('Magento_Downloadable::report_products_downloads')
-            ->_addBreadcrumb(
-                __('Downloads'),
-                __('Downloads')
-            )
-            ->_addContent(
-                $this->_view->getLayout()->createBlock('Magento\Reports\Block\Adminhtml\Product\Downloads')
-            );
-        $this->_view->renderLayout();
-    }
-
-    /**
-     * Export products downloads report to CSV format
-     *
-     * @return ResponseInterface
-     */
-    public function exportDownloadsCsvAction()
-    {
-        $fileName   = 'products_downloads.csv';
-        $content    = $this->_view->getLayout()->createBlock('Magento\Reports\Block\Adminhtml\Product\Downloads\Grid')
-            ->setSaveParametersInSession(true)
-            ->getCsv();
-
-        return $this->_fileFactory->create($fileName, $content);
-    }
-
-    /**
-     * Export products downloads report to XLS format
-     *
-     * @return ResponseInterface
-     */
-    public function exportDownloadsExcelAction()
-    {
-        $fileName   = 'products_downloads.xml';
-        $content    = $this->_view->getLayout()->createBlock('Magento\Reports\Block\Adminhtml\Product\Downloads\Grid')
-            ->setSaveParametersInSession(true)
-            ->getExcel($fileName);
-
-        return $this->_fileFactory->create($fileName, $content);
-    }
 
     /**
      * Check is allowed for report

@@ -37,16 +37,13 @@ class Price extends
     \Magento\Backend\Block\Widget\Grid\Column\Renderer\Price
 {
     /**
-     * Render minimal price for downloadable products
+     * Render minimal price for products
      *
      * @param   \Magento\Object $row
      * @return  string
      */
     public function render(\Magento\Object $row)
     {
-        if ($row->getTypeId() == 'downloadable') {
-            $row->setPrice($row->getPrice());
-        }
         return parent::render($row);
     }
 
