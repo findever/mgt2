@@ -141,15 +141,6 @@ class Invoice extends \Magento\Sales\Block\Order\Invoice\Items
     }
 
     /**
-     * @param object $order
-     * @return string
-     */
-    public function getCreditmemoUrl($order)
-    {
-        return $this->getUrl('*/*/creditmemo', array('order_id' => $order->getId()));
-    }
-
-    /**
      * @param object $invoice
      * @return string
      */

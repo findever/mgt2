@@ -7,4 +7,5 @@
 ———————————————————
  2014-07-13 
  移除除中文及美式英语以外的语言
+ 移除google checkout 、 downloadable 、creditmemo 、开发测试目录
  

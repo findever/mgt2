@@ -751,9 +751,7 @@ class Express extends \Magento\Payment\Model\Method\AbstractMethod
      */
     public function canVoid(\Magento\Object $payment)
     {
-        if ($payment instanceof \Magento\Sales\Model\Order\Invoice
-            || $payment instanceof \Magento\Sales\Model\Order\Creditmemo
-        ) {
+        if ($payment instanceof \Magento\Sales\Model\Order\Invoice) {
             return false;
         }
         $info = $this->getInfoInstance();

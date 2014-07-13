@@ -201,10 +201,6 @@ class AbstractItems extends \Magento\Backend\Block\Template
         return '&nbsp;';
     }
 
-    public function getCreditmemo()
-    {
-        return $this->_coreRegistry->registry('current_creditmemo');
-    }
 
     /**
      * ######################### SALES ##################################
@@ -229,9 +225,6 @@ class AbstractItems extends \Magento\Backend\Block\Template
         }
         if ($this->getInvoice()) {
             return $this->getInvoice()->getOrder();
-        }
-        if ($this->getCreditmemo()) {
-            return $this->getCreditmemo()->getOrder();
         }
         if ($this->getItem()->getOrder()) {
             return $this->getItem()->getOrder();
@@ -506,21 +499,7 @@ class AbstractItems extends \Magento\Backend\Block\Template
     }
 
     /**
-     * CREDITMEMO
-     */
-
-    public function canReturnToStock()
-    {
-        if ($this->_storeConfig->getConfig(\Magento\CatalogInventory\Model\Stock\Item::XML_PATH_CAN_SUBTRACT)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * Whether to show 'Return to stock' checkbox for item
-     * @param \Magento\Sales\Model\Order\Creditmemo\Item $item
      * @return bool
      */
     public function canReturnItemToStock($item = null)
@@ -538,26 +517,6 @@ class AbstractItems extends \Magento\Backend\Block\Template
                 }
             }
             $canReturnToStock = $item->getCanReturnToStock();
-        }
-        return $canReturnToStock;
-    }
-
-    /**
-     * Whether to show 'Return to stock' column for item parent
-     * @param \Magento\Sales\Model\Order\Creditmemo\Item $item
-     * @return bool
-     */
-    public function canParentReturnToStock($item = null)
-    {
-        $canReturnToStock = $this->_storeConfig->getConfig(
-            \Magento\CatalogInventory\Model\Stock\Item::XML_PATH_CAN_SUBTRACT
-        );
-        if (!is_null($item)) {
-            if ($item->getCreditmemo()->getOrder()->hasCanReturnToStock()) {
-                $canReturnToStock = $item->getCreditmemo()->getOrder()->getCanReturnToStock();
-            }
-        } elseif ($this->getOrder()->hasCanReturnToStock()) {
-            $canReturnToStock = $this->getOrder()->getCanReturnToStock();
         }
         return $canReturnToStock;
     }

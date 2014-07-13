@@ -70,10 +70,6 @@
                             <item name="label" xsi:type="string" translate="true">Print Packing Slips</item>
                             <item name="url" xsi:type="string">sales/order/pdfshipments</item>
                         </item>
-                        <item name="pdfcreditmemos_order" xsi:type="array">
-                            <item name="label" xsi:type="string" translate="true">Print Credit Memos</item>
-                            <item name="url" xsi:type="string">sales/order/pdfcreditmemos</item>
-                        </item>
                         <item name="pdfdocs_order" xsi:type="array">
                             <item name="label" xsi:type="string" translate="true">Print All</item>
                             <item name="url" xsi:type="string">sales/order/pdfdocs</item>

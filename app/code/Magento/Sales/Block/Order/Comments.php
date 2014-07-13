@@ -34,11 +34,6 @@ class Comments extends \Magento\View\Element\Template
     protected $_invoiceCollectionFactory;
 
     /**
-     * @var \Magento\Sales\Model\Resource\Order\Creditmemo\Comment\CollectionFactory
-     */
-    protected $_memoCollectionFactory;
-
-    /**
      * @var \Magento\Sales\Model\Resource\Order\Shipment\Comment\CollectionFactory
      */
     protected $_shipmentCollectionFactory;
@@ -60,20 +55,17 @@ class Comments extends \Magento\View\Element\Template
     /**
      * @param \Magento\View\Element\Template\Context $context
      * @param \Magento\Sales\Model\Resource\Order\Invoice\Comment\CollectionFactory $invoiceCollectionFactory
-     * @param \Magento\Sales\Model\Resource\Order\Creditmemo\Comment\CollectionFactory $memoCollectionFactory
      * @param \Magento\Sales\Model\Resource\Order\Shipment\Comment\CollectionFactory $shipmentCollectionFactory
      * @param array $data
      */
     public function __construct(
         \Magento\View\Element\Template\Context $context,
         \Magento\Sales\Model\Resource\Order\Invoice\Comment\CollectionFactory $invoiceCollectionFactory,
-        \Magento\Sales\Model\Resource\Order\Creditmemo\Comment\CollectionFactory $memoCollectionFactory,
         \Magento\Sales\Model\Resource\Order\Shipment\Comment\CollectionFactory $shipmentCollectionFactory,
         array $data = array()
     ) {
         parent::__construct($context, $data);
         $this->_invoiceCollectionFactory = $invoiceCollectionFactory;
-        $this->_memoCollectionFactory = $memoCollectionFactory;
         $this->_shipmentCollectionFactory = $shipmentCollectionFactory;
     }
 
@@ -112,8 +104,6 @@ class Comments extends \Magento\View\Element\Template
             $entity = $this->getEntity();
             if ($entity instanceof \Magento\Sales\Model\Order\Invoice) {
                 $this->_commentCollection = $this->_invoiceCollectionFactory->create();
-            } else if ($entity instanceof \Magento\Sales\Model\Order\Creditmemo) {
-                $this->_commentCollection = $this->_memoCollectionFactory->create();
             } else if ($entity instanceof \Magento\Sales\Model\Order\Shipment) {
                 $this->_commentCollection = $this->_shipmentCollectionFactory->create();
             } else {

@@ -132,28 +132,4 @@ class Guest extends \Magento\Sales\Controller\AbstractController
         }
     }
 
-    public function printCreditmemoAction()
-    {
-        if (!$this->_loadValidOrder()) {
-            return;
-        }
-
-        $creditmemoId = (int) $this->getRequest()->getParam('creditmemo_id');
-        if ($creditmemoId) {
-            $creditmemo = $this->_objectManager->create('Magento\Sales\Model\Order\Creditmemo')->load($creditmemoId);
-            $order = $creditmemo->getOrder();
-        } else {
-            $order = $this->_coreRegistry->registry('current_order');
-        }
-
-        if ($this->_canViewOrder($order)) {
-            if (isset($creditmemo)) {
-                $this->_coreRegistry->register('current_creditmemo', $creditmemo);
-            }
-            $this->_view->loadLayout('print');
-            $this->_view->renderLayout();
-        } else {
-            $this->_redirect('sales/guest/form');
-        }
-    }
 }

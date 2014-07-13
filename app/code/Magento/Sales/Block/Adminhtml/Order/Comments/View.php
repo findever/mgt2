@@ -97,9 +97,6 @@ class View extends \Magento\Backend\Block\Template
             case 'shipment':
                 return $this->_salesData
                     ->canSendShipmentCommentEmail($this->getEntity()->getOrder()->getStore()->getId());
-            case 'creditmemo':
-                return $this->_salesData
-                    ->canSendCreditmemoCommentEmail($this->getEntity()->getOrder()->getStore()->getId());
         }
         return true;
     }

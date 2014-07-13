@@ -363,17 +363,6 @@ class Order extends \Magento\Backend\App\Action
     }
 
     /**
-     * Generate credit memos grid for ajax request
-     */
-    public function creditmemosAction()
-    {
-        $this->_initOrder();
-        $this->getResponse()->setBody(
-            $this->_view->getLayout()->createBlock('Magento\Sales\Block\Adminhtml\Order\View\Tab\Creditmemos')->toHtml()
-        );
-    }
-
-    /**
      * Generate order history for ajax request
      */
     public function commentsHistoryAction()
@@ -581,44 +570,6 @@ class Order extends \Magento\Backend\App\Action
         $this->_redirect('sales/*/');
     }
 
-    /**
-     * Print credit memos for selected orders
-     */
-    public function pdfcreditmemosAction()
-    {
-        $orderIds = $this->getRequest()->getPost('order_ids');
-        $flag = false;
-        if (!empty($orderIds)) {
-            foreach ($orderIds as $orderId) {
-                $creditmemos = $this->_objectManager->create('Magento\Sales\Model\Resource\Order\Creditmemo\Collection')
-                    ->setOrderFilter($orderId)
-                    ->load();
-                if ($creditmemos->getSize()) {
-                    $flag = true;
-                    if (!isset($pdf)) {
-                        $pdf = $this->_objectManager->create('Magento\Sales\Model\Order\Pdf\Creditmemo')->getPdf($creditmemos);
-                    } else {
-                        $pages = $this->_objectManager->create('Magento\Sales\Model\Order\Pdf\Creditmemo')->getPdf($creditmemos);
-                        $pdf->pages = array_merge($pdf->pages, $pages->pages);
-                    }
-                }
-            }
-            if ($flag) {
-                return $this->_fileFactory->create(
-                    'creditmemo' . $this->_objectManager->get('Magento\Core\Model\Date')->date('Y-m-d_H-i-s') . '.pdf',
-                    $pdf->render(),
-                    \Magento\App\Filesystem::VAR_DIR,
-                    'application/pdf'
-                );
-            } else {
-                $this->messageManager->addError(
-                    __('There are no printable documents related to selected orders.')
-                );
-                $this->_redirect('sales/*/');
-            }
-        }
-        $this->_redirect('sales/*/');
-    }
 
     /**
      * Print all documents for selected orders
@@ -655,18 +606,6 @@ class Order extends \Magento\Backend\App\Action
                     }
                 }
 
-                $creditmemos = $this->_objectManager->create('Magento\Sales\Model\Resource\Order\Creditmemo\Collection')
-                    ->setOrderFilter($orderId)
-                    ->load();
-                if ($creditmemos->getSize()) {
-                    $flag = true;
-                    if (!isset($pdf)) {
-                        $pdf = $this->_objectManager->create('Magento\Sales\Model\Order\Pdf\Creditmemo')->getPdf($creditmemos);
-                    } else {
-                        $pages = $this->_objectManager->create('Magento\Sales\Model\Order\Pdf\Creditmemo')->getPdf($creditmemos);
-                        $pdf->pages = array_merge ($pdf->pages, $pages->pages);
-                    }
-                }
             }
             if ($flag) {
                 return $this->_fileFactory->create(
@@ -734,9 +673,6 @@ class Order extends \Magento\Backend\App\Action
                 break;
             case 'addcomment':
                 $aclResource = 'Magento_Sales::comment';
-                break;
-            case 'creditmemos':
-                $aclResource = 'Magento_Sales::creditmemo';
                 break;
             case 'reviewpayment':
                 $aclResource = 'Magento_Sales::review_payment';

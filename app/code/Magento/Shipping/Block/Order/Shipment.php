@@ -151,15 +151,6 @@ class Shipment extends \Magento\View\Element\Template
     }
 
     /**
-     * @param object $order
-     * @return string
-     */
-    public function getCreditmemoUrl($order)
-    {
-        return $this->getUrl('*/*/creditmemo', array('order_id' => $order->getId()));
-    }
-
-    /**
      * @param object $shipment
      * @return string
      */

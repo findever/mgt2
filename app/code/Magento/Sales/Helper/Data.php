@@ -139,27 +139,4 @@ class Data extends \Magento\Core\Helper\Data
             ->getConfigFlag(\Magento\Sales\Model\Order\Invoice::XML_PATH_UPDATE_EMAIL_ENABLED, $store);
     }
 
-    /**
-     * Check allow to send new creditmemo email
-     *
-     * @param mixed $store
-     * @return bool
-     */
-    public function canSendNewCreditmemoEmail($store = null)
-    {
-        return $this->_coreStoreConfig
-            ->getConfigFlag(\Magento\Sales\Model\Order\Creditmemo::XML_PATH_EMAIL_ENABLED, $store);
-    }
-
-    /**
-     * Check allow to send creditmemo comment email
-     *
-     * @param mixed $store
-     * @return bool
-     */
-    public function canSendCreditmemoCommentEmail($store = null)
-    {
-        return $this->_coreStoreConfig
-            ->getConfigFlag(\Magento\Sales\Model\Order\Creditmemo::XML_PATH_UPDATE_EMAIL_ENABLED, $store);
-    }
 }

@@ -257,7 +257,6 @@
 "Note: %s","注意：%s"
 "Nothing to fetch because of an empty configuration.","由于配置为空，未获取任何信息"
 "Notice that PayPal can handle up to 10 shipping options. That is why Magento will transfer only first 10 cheapest shipping options if there are more than 10 available.","请注意，PayPal 最多可处理10个运送选项。因此如果可用数超过10个，Magento将只传输运费最便宜的前十个。"
-"Notified customer about creditmemo #%s.","通知客户有关信用提醒 #%s。"
 "Notified customer about invoice #%s.","通知客户有关发票 #%s。"
 "Now accepting PayPal (150 X 40)","现在接受PayPal（150X40）"
 "Now accepting PayPal (150 X 60)","现在接受PayPal（150X60）"

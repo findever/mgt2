@@ -62,7 +62,6 @@ class Observer
         $this->_resourceConfig = $resourceConfig;
     }
     /**
-     * Set forced canCreditmemo flag
      *
      * @param \Magento\Event\Observer $observer
      * @return $this
@@ -82,12 +81,7 @@ class Observer
         if ($order->isCanceled() || $order->getState() === \Magento\Sales\Model\Order::STATE_CLOSED) {
             return $this;
         }
-        /**
-         * Allow forced creditmemo just in case if it wasn't defined before
-         */
-        if (!$order->hasForcedCanCreditmemo()) {
-            $order->setForcedCanCreditmemo(true);
-        }
+        
         return $this;
     }
 

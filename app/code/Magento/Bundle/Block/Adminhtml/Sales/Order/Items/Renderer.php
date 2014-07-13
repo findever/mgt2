@@ -52,7 +52,7 @@ class Renderer extends \Magento\Sales\Block\Adminhtml\Items\Renderer\DefaultRend
     }
 
     /**
-     * Getting all available childs for Invoice, Shipmen or Creditmemo item
+     * Getting all available childs for Invoice, Shipmen item
      *
      * @param \Magento\Object $item
      * @return array
@@ -65,10 +65,8 @@ class Renderer extends \Magento\Sales\Block\Adminhtml\Items\Renderer\DefaultRend
             $items = $item->getInvoice()->getAllItems();
         } else if ($item instanceof \Magento\Sales\Model\Order\Shipment\Item) {
             $items = $item->getShipment()->getAllItems();
-        } else if ($item instanceof \Magento\Sales\Model\Order\Creditmemo\Item) {
-            $items = $item->getCreditmemo()->getAllItems();
         }
-
+		
         if ($items) {
             foreach ($items as $value) {
                 $parentItem = $value->getOrderItem()->getParentItem();

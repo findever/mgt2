@@ -42,7 +42,6 @@
                                 <resource id="Magento_Sales::review_payment" title="Accept or Deny Payment" sortOrder="70" />
                                 <resource id="Magento_Sales::capture" title="Capture" sortOrder="80" />
                                 <resource id="Magento_Sales::invoice" title="Invoice" sortOrder="90" />
-                                <resource id="Magento_Sales::creditmemo" title="Credit Memos" sortOrder="100" />
                                 <resource id="Magento_Sales::hold" title="Hold" sortOrder="110" />
                                 <resource id="Magento_Sales::unhold" title="Unhold" sortOrder="120" />
                                 <resource id="Magento_Sales::ship" title="Ship" sortOrder="130" />
@@ -52,7 +51,6 @@
                         </resource>
                         <resource id="Magento_Sales::sales_invoice"   title="Invoices" sortOrder="20" />
                         <resource id="Magento_Sales::shipment"   title="Shipments" sortOrder="30" />
-                        <resource id="Magento_Sales::sales_creditmemo"  title="Credit Memos" sortOrder="40" />
                         <resource id="Magento_Sales::transactions"   title="Transactions" sortOrder="70">
                             <resource id="Magento_Sales::transactions_fetch" title="Fetch" sortOrder="10" />
                         </resource>

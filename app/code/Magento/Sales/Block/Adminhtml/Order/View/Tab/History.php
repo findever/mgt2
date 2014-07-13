@@ -73,7 +73,7 @@ class History
 
     /**
      * Compose and get order full history.
-     * Consists of the status history comments as well as of invoices, shipments and creditmemos creations
+     * Consists of the status history comments as well as of invoices, shipments creations
      *
      * @return array
      */
@@ -89,23 +89,6 @@ class History
                 $orderComment->getCreatedAtDate(),
                 $orderComment->getComment()
             );
-        }
-
-        foreach ($order->getCreditmemosCollection() as $_memo){
-            $history[] = $this->_prepareHistoryItem(
-                __('Credit memo #%1 created', $_memo->getIncrementId()),
-                $_memo->getEmailSent(),
-                $_memo->getCreatedAtDate()
-            );
-
-            foreach ($_memo->getCommentsCollection() as $_comment){
-                $history[] = $this->_prepareHistoryItem(
-                    __('Credit memo #%1 comment added', $_memo->getIncrementId()),
-                    $_comment->getIsCustomerNotified(),
-                    $_comment->getCreatedAtDate(),
-                    $_comment->getComment()
-                );
-            }
         }
 
         foreach ($order->getShipmentsCollection() as $_shipment){

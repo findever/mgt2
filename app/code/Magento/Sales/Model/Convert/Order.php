@@ -74,16 +74,6 @@ class Order extends \Magento\Object
     protected $_orderShipmentFactory;
 
     /**
-     * @var \Magento\Sales\Model\Order\CreditmemoFactory
-     */
-    protected $_creditmemoFactory;
-
-    /**
-     * @var \Magento\Sales\Model\Order\Creditmemo\ItemFactory
-     */
-    protected $_creditmemoItemFactory;
-
-    /**
      * @var \Magento\Object\Copy
      */
     protected $_objectCopyService;
@@ -98,8 +88,6 @@ class Order extends \Magento\Object
      * @param \Magento\Sales\Model\Order\Invoice\ItemFactory $invoiceItemFactory
      * @param \Magento\Sales\Model\Order\ShipmentFactory $orderShipmentFactory
      * @param \Magento\Sales\Model\Order\Shipment\ItemFactory $shipmentItemFactory
-     * @param \Magento\Sales\Model\Order\CreditmemoFactory $creditmemoFactory
-     * @param \Magento\Sales\Model\Order\Creditmemo\ItemFactory $creditmemoItemFactory
      * @param \Magento\Object\Copy $objectCopyService
      * @param array $data
      *
@@ -115,8 +103,6 @@ class Order extends \Magento\Object
         \Magento\Sales\Model\Order\Invoice\ItemFactory $invoiceItemFactory,
         \Magento\Sales\Model\Order\ShipmentFactory $orderShipmentFactory,
         \Magento\Sales\Model\Order\Shipment\ItemFactory $shipmentItemFactory,
-        \Magento\Sales\Model\Order\CreditmemoFactory $creditmemoFactory,
-        \Magento\Sales\Model\Order\Creditmemo\ItemFactory $creditmemoItemFactory,
         \Magento\Object\Copy $objectCopyService,
         array $data = array()
     ) {
@@ -129,8 +115,6 @@ class Order extends \Magento\Object
         $this->_invoiceItemFactory = $invoiceItemFactory;
         $this->_orderShipmentFactory = $orderShipmentFactory;
         $this->_shipmentItemFactory = $shipmentItemFactory;
-        $this->_creditmemoFactory = $creditmemoFactory;
-        $this->_creditmemoItemFactory = $creditmemoItemFactory;
         $this->_objectCopyService = $objectCopyService;
         parent::__construct($data);
     }
@@ -307,38 +291,4 @@ class Order extends \Magento\Object
         return $shipmentItem;
     }
 
-    /**
-     * Convert order object to creditmemo
-     *
-     * @param   \Magento\Sales\Model\Order $order
-     * @return  \Magento\Sales\Model\Order\Creditmemo
-     */
-    public function toCreditmemo(\Magento\Sales\Model\Order $order)
-    {
-        $creditmemo = $this->_creditmemoFactory->create();
-        $creditmemo->setOrder($order)
-            ->setStoreId($order->getStoreId())
-            ->setCustomerId($order->getCustomerId())
-            ->setBillingAddressId($order->getBillingAddressId())
-            ->setShippingAddressId($order->getShippingAddressId());
-
-        $this->_objectCopyService->copyFieldsetToTarget('sales_convert_order', 'to_cm', $order, $creditmemo);
-        return $creditmemo;
-    }
-
-    /**
-     * Convert order item object to Creditmemo item
-     *
-     * @param   \Magento\Sales\Model\Order\Item $item
-     * @return  \Magento\Sales\Model\Order\Creditmemo\Item
-     */
-    public function itemToCreditmemoItem(\Magento\Sales\Model\Order\Item $item)
-    {
-        $creditmemoItem = $this->_creditmemoItemFactory->create();
-        $creditmemoItem->setOrderItem($item)
-            ->setProductId($item->getProductId());
-
-        $this->_objectCopyService->copyFieldsetToTarget('sales_convert_order_item', 'to_cm_item', $item, $creditmemoItem);
-        return $creditmemoItem;
-    }
 }

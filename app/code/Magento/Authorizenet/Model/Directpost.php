@@ -291,16 +291,6 @@ class Directpost extends \Magento\Authorizenet\Model\Authorizenet
         return \Magento\Payment\Model\Method\AbstractMethod::processInvoice($invoice, $payment);
     }
 
-    /**
-     * Set transaction ID into creditmemo for informational purposes
-     * @param \Magento\Sales\Model\Order\Creditmemo $creditmemo
-     * @param \Magento\Sales\Model\Order\Payment $payment
-     * @return \Magento\Payment\Model\Method\AbstractMethod
-     */
-    public function processCreditmemo($creditmemo, $payment)
-    {
-        return \Magento\Payment\Model\Method\AbstractMethod::processCreditmemo($creditmemo, $payment);
-    }
 
     /**
      * Refund the amount
@@ -356,7 +346,7 @@ class Directpost extends \Magento\Authorizenet\Model\Authorizenet
                     if ($result->getTransactionId() != $payment->getParentTransactionId()) {
                         $payment->setTransactionId($result->getTransactionId());
                     }
-                    $shouldCloseCaptureTransaction = $payment->getOrder()->canCreditmemo() ? 0 : 1;
+                    $shouldCloseCaptureTransaction = 1;
                     $payment
                         ->setIsTransactionClosed(1)
                         ->setShouldCloseParentTransaction($shouldCloseCaptureTransaction)

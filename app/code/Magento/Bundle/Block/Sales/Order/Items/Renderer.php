@@ -137,7 +137,7 @@ class Renderer extends \Magento\Sales\Block\Order\Item\Renderer\DefaultRenderer
     }
 
     /**
-     * Getting all available childs for Invoice, Shipmen or Creditmemo item
+     * Getting all available childs for Invoice, Shipmen item
      *
      * @param \Magento\Object $item
      * @return array
@@ -150,8 +150,6 @@ class Renderer extends \Magento\Sales\Block\Order\Item\Renderer\DefaultRenderer
             $_items = $item->getInvoice()->getAllItems();
         } else if ($item instanceof \Magento\Sales\Model\Order\Shipment\Item) {
             $_items = $item->getShipment()->getAllItems();
-        } else if ($item instanceof \Magento\Sales\Model\Order\Creditmemo\Item) {
-            $_items = $item->getCreditmemo()->getAllItems();
         }
 
         if ($_items) {

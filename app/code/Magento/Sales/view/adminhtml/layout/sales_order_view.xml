@@ -68,10 +68,6 @@
                 <argument name="block" xsi:type="string">Magento\Sales\Block\Adminhtml\Order\View\Tab\Invoices</argument>
             </action>
             <action method="addTab">
-                <argument name="name" xsi:type="string">order_creditmemos</argument>
-                <argument name="block" xsi:type="string">Magento\Sales\Block\Adminhtml\Order\View\Tab\Creditmemos</argument>
-            </action>
-            <action method="addTab">
                 <argument name="name" xsi:type="string">order_shipments</argument>
                 <argument name="block" xsi:type="string">Magento\Sales\Block\Adminhtml\Order\View\Tab\Shipments</argument>
             </action>

@@ -923,9 +923,7 @@ class Data extends \Magento\App\Helper\AbstractHelper
     {
         if ($this->_coreRegistry->registry('current_invoice')) {
             $current = $this->_coreRegistry->registry('current_invoice');
-        } elseif ($this->_coreRegistry->registry('current_creditmemo')) {
-            $current = $this->_coreRegistry->registry('current_creditmemo');
-        } else {
+        }else {
             $current = $source;
         }
 
@@ -995,9 +993,7 @@ class Data extends \Magento\App\Helper\AbstractHelper
     {
         if ($this->_coreRegistry->registry('current_invoice')) {
             $current = $this->_coreRegistry->registry('current_invoice');
-        } elseif ($this->_coreRegistry->registry('current_creditmemo')) {
-            $current = $this->_coreRegistry->registry('current_creditmemo');
-        } else {
+        }else {
             $current = $source;
         }
 

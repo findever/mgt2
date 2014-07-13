@@ -37,9 +37,4 @@
             <item name="weee" instance="Magento\Weee\Model\Total\Invoice\Weee" sort_order="600"/>
         </group>
     </section>
-    <section name="order_creditmemo">
-        <group name="totals">
-            <item name="weee" instance="Magento\Weee\Model\Total\Creditmemo\Weee" sort_order="100"/>
-        </group>
-    </section>
 </config>

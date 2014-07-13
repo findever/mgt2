@@ -657,86 +657,11 @@ class Payment extends \Magento\Payment\Model\Info
     }
 
     /**
-     * Refund payment online or offline, depending on whether there is invoice set in the creditmemo instance
-     * Updates transactions hierarchy, if required
-     * Updates payment totals, updates order status and adds proper comments
-     *
-     * @param \Magento\Sales\Model\Order\Creditmemo $creditmemo
-     * @return \Magento\Sales\Model\Order\Payment
-     * @throws \Exception|\Magento\Core\Exception
-     */
-    public function refund($creditmemo)
-    {
-        $baseAmountToRefund = $this->_formatAmount($creditmemo->getBaseGrandTotal());
-        $order = $this->getOrder();
-
-        $this->_generateTransactionId(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_REFUND);
-
-        // call refund from gateway if required
-        $isOnline = false;
-        $gateway = $this->getMethodInstance();
-        $invoice = null;
-        if ($gateway->canRefund() && $creditmemo->getDoTransaction()) {
-            $this->setCreditmemo($creditmemo);
-            $invoice = $creditmemo->getInvoice();
-            if ($invoice) {
-                $isOnline = true;
-                $captureTxn = $this->_lookupTransaction($invoice->getTransactionId());
-                if ($captureTxn) {
-                    $this->setParentTransactionId($captureTxn->getTxnId());
-                }
-                $this->setShouldCloseParentTransaction(true); // TODO: implement multiple refunds per capture
-                try {
-                    $gateway->setStore($this->getOrder()->getStoreId())
-                        ->processBeforeRefund($invoice, $this)
-                        ->refund($this, $baseAmountToRefund)
-                        ->processCreditmemo($creditmemo, $this)
-                    ;
-                } catch (\Magento\Core\Exception $e) {
-                    if (!$captureTxn) {
-                        $e->setMessage(' ' . __('If the invoice was created offline, try creating an offline credit memo.'), true);
-                    }
-                    throw $e;
-                }
-            }
-        }
-
-        // update self totals from creditmemo
-        $this->_updateTotals(array(
-            'amount_refunded' => $creditmemo->getGrandTotal(),
-            'base_amount_refunded' => $baseAmountToRefund,
-            'base_amount_refunded_online' => $isOnline ? $baseAmountToRefund : null,
-            'shipping_refunded' => $creditmemo->getShippingAmount(),
-            'base_shipping_refunded' => $creditmemo->getBaseShippingAmount(),
-        ));
-
-        // update transactions and order state
-        $transaction = $this->_addTransaction(
-            \Magento\Sales\Model\Order\Payment\Transaction::TYPE_REFUND,
-            $creditmemo,
-            $isOnline
-        );
-        if ($invoice) {
-            $message = __('We refunded %1 online.', $this->_formatPrice($baseAmountToRefund));
-        } else {
-            $message = $this->hasMessage() ? $this->getMessage()
-                : __('We refunded %1 offline.', $this->_formatPrice($baseAmountToRefund));
-        }
-        $message = $message = $this->_prependMessage($message);
-        $message = $this->_appendTransactionToMessage($transaction, $message);
-        $order->setState(\Magento\Sales\Model\Order::STATE_PROCESSING, true, $message);
-
-        $this->_eventManager->dispatch('sales_order_payment_refund', array('payment' => $this, 'creditmemo' => $creditmemo));
-        return $this;
-    }
-
-    /**
      * Process payment refund notification
      * Updates transactions hierarchy, if required
      * Prevents transaction double processing
      * Updates payment totals, updates order status and adds proper comments
      * TODO: potentially a full capture can be refunded. In this case if there was only one invoice for that transaction
-     *       then we should create a creditmemo from invoice and also refund it offline
      * TODO: implement logic of chargebacks reimbursements (via negative amount)
      *
      * @param float $amount
@@ -778,63 +703,25 @@ class Payment extends \Magento\Payment\Model\Info
             } else {
                 $adjustment = array('adjustment_negative' => $baseGrandTotal - $amount);
             }
-            $creditmemo = $serviceModel->prepareInvoiceCreditmemo($invoice, $adjustment);
-            if ($creditmemo) {
-                $totalRefunded = $invoice->getBaseTotalRefunded() + $creditmemo->getBaseGrandTotal();
-                $this->setShouldCloseParentTransaction($invoice->getBaseGrandTotal() <= $totalRefunded);
-            }
         } else {
             if ($order->getBaseTotalRefunded() > 0) {
                 $adjustment = array('adjustment_positive' => $amount);
             } else {
                 $adjustment = array('adjustment_negative' => $baseGrandTotal - $amount);
             }
-            $creditmemo = $serviceModel->prepareCreditmemo($adjustment);
-            if ($creditmemo) {
-                $totalRefunded = $order->getBaseTotalRefunded() + $creditmemo->getBaseGrandTotal();
-                $this->setShouldCloseParentTransaction($order->getBaseGrandTotal() <= $totalRefunded);
-            }
         }
 
-        $creditmemo->setPaymentRefundDisallowed(true)
-            ->setAutomaticallyCreated(true)
-            ->register()
-            ->addComment(__('The credit memo has been created automatically.'));
-        $creditmemo->save();
-
         $this->_updateTotals(array(
-            'amount_refunded' => $creditmemo->getGrandTotal(),
             'base_amount_refunded_online' => $amount
         ));
 
-        $this->setCreatedCreditmemo($creditmemo);
         // update transactions and order state
-        $transaction = $this->_addTransaction(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_REFUND, $creditmemo);
+        $transaction = $this->_addTransaction(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_REFUND);
         $message = $this->_prependMessage(
             __('Registered notification about refunded amount of %1.', $this->_formatPrice($amount))
         );
         $message = $this->_appendTransactionToMessage($transaction, $message);
         $order->setState(\Magento\Sales\Model\Order::STATE_PROCESSING, true, $message);
-        return $this;
-    }
-
-    /**
-     * Cancel a creditmemo: substract its totals from the payment
-     *
-     * @param \Magento\Sales\Model\Order\Creditmemo $creditmemo
-     * @return \Magento\Sales\Model\Order\Payment
-     */
-    public function cancelCreditmemo($creditmemo)
-    {
-        $this->_updateTotals(array(
-            'amount_refunded' => -1 * $creditmemo->getGrandTotal(),
-            'base_amount_refunded' => -1 * $creditmemo->getBaseGrandTotal(),
-            'shipping_refunded' => -1 * $creditmemo->getShippingAmount(),
-            'base_shipping_refunded' => -1 * $creditmemo->getBaseShippingAmount()
-        ));
-        $this->_eventManager->dispatch('sales_order_payment_cancel_creditmemo',
-            array('payment' => $this, 'creditmemo' => $creditmemo)
-        );
         return $this;
     }
 

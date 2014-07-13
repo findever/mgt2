@@ -67,7 +67,7 @@ class Order
             'created_at',
         );
         $commentSelects = array();
-        foreach (array('invoice', 'shipment', 'creditmemo') as $entityTypeCode) {
+        foreach (array('invoice', 'shipment') as $entityTypeCode) {
             $mainTable  = $res->getTableName('sales_flat_' . $entityTypeCode);
             $slaveTable = $res->getTableName('sales_flat_' . $entityTypeCode . '_comment');
             $select = $read->select()

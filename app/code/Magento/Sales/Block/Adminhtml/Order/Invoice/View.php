@@ -108,20 +108,6 @@ class View extends \Magento\Backend\Block\Widget\Form\Container
 
         $orderPayment = $this->getInvoice()->getOrder()->getPayment();
 
-        if ($this->_isAllowedAction('Magento_Sales::creditmemo') && $this->getInvoice()->getOrder()->canCreditmemo()) {
-            if (($orderPayment->canRefundPartialPerInvoice()
-                && $this->getInvoice()->canRefund()
-                && $orderPayment->getAmountPaid() > $orderPayment->getAmountRefunded())
-                || ($orderPayment->canRefund() && !$this->getInvoice()->getIsUsedForRefund())
-            ) {
-                $this->_addButton('capture', array( // capture?
-                    'label'     => __('Credit Memo'),
-                    'class'     => 'go',
-                    'onclick'   => 'setLocation(\''.$this->getCreditMemoUrl().'\')'
-                    )
-                );
-            }
-        }
 
         if ($this->_isAllowedAction('Magento_Sales::capture') && $this->getInvoice()->canCapture() && !$this->_isPaymentReview()) {
             $this->_addButton('capture', array(
@@ -210,14 +196,6 @@ class View extends \Magento\Backend\Block\Widget\Form\Container
     public function getEmailUrl()
     {
         return $this->getUrl('sales/*/email', array(
-            'order_id'  => $this->getInvoice()->getOrder()->getId(),
-            'invoice_id'=> $this->getInvoice()->getId(),
-        ));
-    }
-
-    public function getCreditMemoUrl()
-    {
-        return $this->getUrl('sales/order_creditmemo/start', array(
             'order_id'  => $this->getInvoice()->getOrder()->getId(),
             'invoice_id'=> $this->getInvoice()->getId(),
         ));

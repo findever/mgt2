@@ -39,7 +39,7 @@ abstract class AbstractItems extends \Magento\Core\Model\AbstractModel
     protected $_order;
 
     /**
-     * Source model (invoice, shipment, creditmemo)
+     * Source model (invoice, shipment)
      *
      * @var \Magento\Core\Model\AbstractModel
      */

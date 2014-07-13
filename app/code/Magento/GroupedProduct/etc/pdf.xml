@@ -28,8 +28,5 @@
         <page type="invoice">
             <renderer product_type="grouped">Magento\GroupedProduct\Model\Order\Pdf\Items\Invoice\Grouped</renderer>
         </page>
-        <page type="creditmemo">
-            <renderer product_type="grouped">Magento\GroupedProduct\Model\Order\Pdf\Items\Creditmemo\Grouped</renderer>
-        </page>
     </renderers>
 </config>

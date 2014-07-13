@@ -1128,17 +1128,6 @@ class Authorizenet extends \Magento\Payment\Model\Method\Cc
         return $this;
     }
 
-    /**
-     * Set transaction ID into creditmemo for informational purposes
-     * @param \Magento\Sales\Model\Order\Creditmemo $creditmemo
-     * @param \Magento\Sales\Model\Order\Payment $payment
-     * @return $this
-     */
-    public function processCreditmemo($creditmemo, $payment)
-    {
-        $creditmemo->setTransactionId(1);
-        return $this;
-    }
 
     /**
      * Fetch transaction details info

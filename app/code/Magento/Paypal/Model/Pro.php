@@ -291,7 +291,7 @@ class Pro
                 ->setTransactionId($captureTxnId)
                 ->setAmount($amount)
                 ->setCurrencyCode($order->getBaseCurrencyCode());
-            $canRefundMore = $payment->getCreditmemo()->getInvoice()->canRefund();
+            $canRefundMore = false;
             $isFullRefund = !$canRefundMore
                 && (0 == ((float)$order->getBaseTotalOnlineRefunded() + (float)$order->getBaseTotalOfflineRefunded()));
             $api->setRefundType($isFullRefund ? \Magento\Paypal\Model\Config::REFUND_TYPE_FULL

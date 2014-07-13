@@ -63,9 +63,6 @@
     <event name="sales_order_item_cancel">
         <observer name="inventory" instance="Magento\CatalogInventory\Model\Observer" method="cancelOrderItem" />
     </event>
-    <event name="sales_order_creditmemo_save_after">
-        <observer name="inventory" instance="Magento\CatalogInventory\Model\Observer" method="refundOrderInventory" />
-    </event>
     <event name="catalog_product_save_after">
         <observer name="inventory" instance="Magento\CatalogInventory\Model\Observer" method="saveInventoryData" />
     </event>

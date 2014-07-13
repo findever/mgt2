@@ -63,7 +63,7 @@ class Collection
     /**
      * Get history object collection for specified instance (order, shipment, invoice or credit memo)
      * Parameter instance may be one of the following types: \Magento\Sales\Model\Order,
-     * \Magento\Sales\Model\Order\Creditmemo, \Magento\Sales\Model\Order\Invoice, \Magento\Sales\Model\Order\Shipment
+     * \Magento\Sales\Model\Order\Invoice, \Magento\Sales\Model\Order\Shipment
      *
      * @param mixed $instance
      * @param string $historyEntityName

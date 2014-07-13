@@ -454,45 +454,6 @@ class Observer
     }
 
     /**
-     * Return creditmemo items qty to stock
-     *
-     * @param EventObserver $observer
-     * @return void
-     */
-    public function refundOrderInventory($observer)
-    {
-        /* @var $creditmemo \Magento\Sales\Model\Order\Creditmemo */
-        $creditmemo = $observer->getEvent()->getCreditmemo();
-        $items = array();
-        foreach ($creditmemo->getAllItems() as $item) {
-            /* @var $item \Magento\Sales\Model\Order\Creditmemo\Item */
-            $return = false;
-            if ($item->hasBackToStock()) {
-                if ($item->getBackToStock() && $item->getQty()) {
-                    $return = true;
-                }
-            } elseif ($this->_catalogInventoryData->isAutoReturnEnabled()) {
-                $return = true;
-            }
-            if ($return) {
-                $parentOrderId = $item->getOrderItem()->getParentItemId();
-                /* @var $parentItem \Magento\Sales\Model\Order\Creditmemo\Item */
-                $parentItem = $parentOrderId ? $creditmemo->getItemByOrderId($parentOrderId) : false;
-                $qty = $parentItem ? ($parentItem->getQty() * $item->getQty()) : $item->getQty();
-                if (isset($items[$item->getProductId()])) {
-                    $items[$item->getProductId()]['qty'] += $qty;
-                } else {
-                    $items[$item->getProductId()] = array(
-                        'qty' => $qty,
-                        'item'=> null,
-                    );
-                }
-            }
-        }
-        $this->_stock->revertProductsSale($items);
-    }
-
-    /**
      * Cancel order item
      *
      * @param   EventObserver $observer

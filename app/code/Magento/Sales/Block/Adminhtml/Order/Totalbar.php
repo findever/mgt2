@@ -25,7 +25,7 @@
  */
 
 /**
- * Adminhtml creditmemo bar
+ * Adminhtml order bar
  *
  * @category   Magento
  * @package    Magento_Sales

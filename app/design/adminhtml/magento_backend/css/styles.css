@@ -6749,7 +6749,6 @@ table .col-draggable .draggable-handle {
 .catalog-product-index .col-1-layout,
 .sales-invoice-index .col-1-layout,
 .sales-shipment-index .col-1-layout,
-.sales-creditmemo-index .col-1-layout,
 .sales-billing-agreement-index .col-1-layout,
 .sales-transactions-index .col-1-layout,
 .sales-recurring-profile-index .col-1-layout,
@@ -9568,10 +9567,6 @@ table.items-to-invoice tbody tr:hover td {
   border: 0;
   text-align: center;
 }
-[class~=" -order-creditmemo-"] .no-items {
-  padding-top: 13px;
-  text-align: center;
-}
 .items-to-invoice .grand-total {
   color: #19a3d1;
   font-weight: bold;
@@ -9581,10 +9576,6 @@ table.items-to-invoice tbody tr:hover td {
 }
 .adminhtml-order-shipment-new .actions {
   float: right;
-}
-.creditmemo-totals .data-table input[type="text"] {
-  text-align: right;
-  width: 60px;
 }
 [class*="-order-"] .order-subtotal .label {
   width: 80%;

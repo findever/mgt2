@@ -26,7 +26,7 @@
 
 
 /**
- * Flat sales order abstract comments collection, used as parent for: invoice, shipment, creditmemo
+ * Flat sales order abstract comments collection, used as parent for: invoice, shipment
  *
  * @category    Magento
  * @package     Magento_Sales

@@ -82,20 +82,6 @@
                 <identity>sales</identity>
                 <copy_method>bcc</copy_method>
             </shipment_comment>
-            <creditmemo>
-                <enabled>1</enabled>
-                <template>sales_email_creditmemo_template</template>
-                <guest_template>sales_email_creditmemo_guest_template</guest_template>
-                <identity>sales</identity>
-                <copy_method>bcc</copy_method>
-            </creditmemo>
-            <creditmemo_comment>
-                <enabled>1</enabled>
-                <template>sales_email_creditmemo_comment_template</template>
-                <guest_template>sales_email_creditmemo_comment_guest_template</guest_template>
-                <identity>sales</identity>
-                <copy_method>bcc</copy_method>
-            </creditmemo_comment>
         </sales_email>
         <sales_pdf>
             <invoice>
@@ -104,9 +90,6 @@
             <shipment>
                 <put_order_id>1</put_order_id>
             </shipment>
-            <creditmemo>
-                <put_order_id>1</put_order_id>
-            </creditmemo>
         </sales_pdf>
         <dashboard>
             <use_aggregated_data>0</use_aggregated_data>

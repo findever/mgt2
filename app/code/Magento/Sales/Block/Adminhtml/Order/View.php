@@ -133,19 +133,6 @@ class View extends \Magento\Backend\Block\Widget\Form\Container
             ));
         }
 
-        if ($this->_isAllowedAction('Magento_Sales::creditmemo') && $order->canCreditmemo()) {
-            $message = __('This will create an offline refund. To create an online refund, open an invoice and create credit memo for it. Do you want to continue?');
-            $onClick = "setLocation('{$this->getCreditmemoUrl()}')";
-            if ($order->getPayment()->getMethodInstance()->isGateway()) {
-                $onClick = "confirmSetLocation('{$message}', '{$this->getCreditmemoUrl()}')";
-            }
-            $this->_addButton('order_creditmemo', array(
-                'label'     => __('Credit Memo'),
-                'onclick'   => $onClick,
-                'class'     => 'go'
-            ));
-        }
-
         // invoice action intentionally
         if ($this->_isAllowedAction('Magento_Sales::invoice') && $order->canVoidPayment()) {
             $message = __('Are you sure you want to void the payment?');
@@ -277,11 +264,6 @@ class View extends \Magento\Backend\Block\Widget\Form\Container
     public function getInvoiceUrl()
     {
         return $this->getUrl('sales/order_invoice/start');
-    }
-
-    public function getCreditmemoUrl()
-    {
-        return $this->getUrl('sales/order_creditmemo/start');
     }
 
     public function getHoldUrl()

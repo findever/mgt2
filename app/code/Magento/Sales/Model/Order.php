@@ -347,7 +347,6 @@ class Order extends \Magento\Sales\Model\AbstractModel
     const ACTION_FLAG_HOLD                      = 'hold';
     const ACTION_FLAG_UNHOLD                    = 'unhold';
     const ACTION_FLAG_EDIT                      = 'edit';
-    const ACTION_FLAG_CREDITMEMO                = 'creditmemo';
     const ACTION_FLAG_INVOICE                   = 'invoice';
     const ACTION_FLAG_REORDER                   = 'reorder';
     const ACTION_FLAG_SHIP                      = 'ship';
@@ -373,7 +372,6 @@ class Order extends \Magento\Sales\Model\AbstractModel
     protected $_invoices;
     protected $_tracks;
     protected $_shipments;
-    protected $_creditmemos;
 
     protected $_relatedObjects  = array();
     protected $_orderCurrency   = null;
@@ -507,11 +505,6 @@ class Order extends \Magento\Sales\Model\AbstractModel
     protected $_shipmentCollectionFactory;
 
     /**
-     * @var Resource\Order\Creditmemo\CollectionFactory
-     */
-    protected $_memoCollectionFactory;
-
-    /**
      * @var Resource\Order\Shipment\Track\CollectionFactory
      */
     protected $_trackCollectionFactory;
@@ -541,7 +534,6 @@ class Order extends \Magento\Sales\Model\AbstractModel
      * @param Resource\Order\Status\History\CollectionFactory $historyCollectionFactory
      * @param Resource\Order\Invoice\CollectionFactory $invoiceCollectionFactory
      * @param Resource\Order\Shipment\CollectionFactory $shipmentCollectionFactory
-     * @param Resource\Order\Creditmemo\CollectionFactory $memoCollectionFactory
      * @param Resource\Order\Shipment\Track\CollectionFactory $trackCollectionFactory
      * @param \Magento\Core\Model\Resource\AbstractResource $resource
      * @param \Magento\Data\Collection\Db $resourceCollection
@@ -572,7 +564,6 @@ class Order extends \Magento\Sales\Model\AbstractModel
         \Magento\Sales\Model\Resource\Order\Status\History\CollectionFactory $historyCollectionFactory,
         \Magento\Sales\Model\Resource\Order\Invoice\CollectionFactory $invoiceCollectionFactory,
         \Magento\Sales\Model\Resource\Order\Shipment\CollectionFactory $shipmentCollectionFactory,
-        \Magento\Sales\Model\Resource\Order\Creditmemo\CollectionFactory $memoCollectionFactory,
         \Magento\Sales\Model\Resource\Order\Shipment\Track\CollectionFactory $trackCollectionFactory,
         \Magento\Core\Model\Resource\AbstractResource $resource = null,
         \Magento\Data\Collection\Db $resourceCollection = null,
@@ -598,7 +589,6 @@ class Order extends \Magento\Sales\Model\AbstractModel
         $this->_historyCollectionFactory = $historyCollectionFactory;
         $this->_invoiceCollectionFactory = $invoiceCollectionFactory;
         $this->_shipmentCollectionFactory = $shipmentCollectionFactory;
-        $this->_memoCollectionFactory = $memoCollectionFactory;
         $this->_trackCollectionFactory = $trackCollectionFactory;
         parent::__construct($context, $registry, $coreLocale, $dateTime, $resource, $resourceCollection, $data);
     }
@@ -801,40 +791,6 @@ class Order extends \Magento\Sales\Model\AbstractModel
             }
         }
         return false;
-    }
-
-    /**
-     * Retrieve order credit memo (refund) availability
-     *
-     * @return bool
-     */
-    public function canCreditmemo()
-    {
-        if ($this->hasForcedCanCreditmemo()) {
-            return $this->getForcedCanCreditmemo();
-        }
-
-        if ($this->canUnhold() || $this->isPaymentReview()) {
-            return false;
-        }
-
-        if ($this->isCanceled() || $this->getState() === self::STATE_CLOSED) {
-            return false;
-        }
-
-        /**
-         * We can have problem with float in php (on some server $a=762.73;$b=762.73; $a-$b!=0)
-         * for this we have additional diapason for 0
-         * TotalPaid - contains amount, that were not rounded.
-         */
-        if (abs($this->getStore()->roundPrice($this->getTotalPaid()) - $this->getTotalRefunded()) < .0001) {
-            return false;
-        }
-
-        if ($this->getActionFlag(self::ACTION_FLAG_EDIT) === false) {
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -2125,25 +2081,6 @@ class Order extends \Magento\Sales\Model\AbstractModel
     }
 
     /**
-     * Retrieve order creditmemos collection
-     *
-     * @return \Magento\Sales\Model\Resource\Order\Creditmemo\Collection|bool
-     */
-    public function getCreditmemosCollection()
-    {
-        if (empty($this->_creditmemos)) {
-            if ($this->getId()) {
-                $this->_creditmemos = $this->_memoCollectionFactory->create()
-                    ->setOrderFilter($this)
-                    ->load();
-            } else {
-                return false;
-            }
-        }
-        return $this->_creditmemos;
-    }
-
-    /**
      * Retrieve order tracking numbers collection
      *
      * @return \Magento\Sales\Model\Resource\Order\Shipment\Track\Collection
@@ -2179,16 +2116,6 @@ class Order extends \Magento\Sales\Model\AbstractModel
     public function hasShipments()
     {
         return $this->getShipmentsCollection()->count();
-    }
-
-    /**
-     * Check order creditmemos availability
-     *
-     * @return bool
-     */
-    public function hasCreditmemos()
-    {
-        return $this->getCreditmemosCollection()->count();
     }
 
     /**
@@ -2322,17 +2249,16 @@ class Order extends \Magento\Sales\Model\AbstractModel
             && !$this->canInvoice()
             && !$this->canShip()
         ) {
-            if (0 == $this->getBaseGrandTotal() || $this->canCreditmemo()) {
+            if (0 == $this->getBaseGrandTotal()) {
                 if ($this->getState() !== self::STATE_COMPLETE) {
                     $this->_setState(self::STATE_COMPLETE, true, '', $userNotification);
                 }
             }
             /**
              * Order can be closed just in case when we have refunded amount.
-             * In case of "0" grand total order checking ForcedCanCreditmemo flag
+             * In case of "0" grand total order
              */
-            elseif (floatval($this->getTotalRefunded()) || (!$this->getTotalRefunded()
-                && $this->hasForcedCanCreditmemo())
+            elseif (floatval($this->getTotalRefunded()) || (!$this->getTotalRefunded())
             ) {
                 if ($this->getState() !== self::STATE_CLOSED) {
                     $this->_setState(self::STATE_CLOSED, true, '', $userNotification);
@@ -2417,7 +2343,6 @@ class Order extends \Magento\Sales\Model\AbstractModel
         $this->_invoices = null;
         $this->_tracks = null;
         $this->_shipments = null;
-        $this->_creditmemos = null;
         $this->_relatedObjects = array();
         $this->_orderCurrency = null;
         $this->_baseCurrency = null;

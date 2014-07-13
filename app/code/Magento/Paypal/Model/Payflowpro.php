@@ -401,9 +401,7 @@ class Payflowpro extends \Magento\Payment\Model\Method\Cc
      */
     public function canVoid(\Magento\Object $payment)
     {
-        if ($payment instanceof \Magento\Sales\Model\Order\Invoice
-            || $payment instanceof \Magento\Sales\Model\Order\Creditmemo
-        ) {
+        if ($payment instanceof \Magento\Sales\Model\Order\Invoice) {
             return false;
         }
         if ($payment->getAmountPaid()) {
@@ -447,7 +445,7 @@ class Payflowpro extends \Magento\Payment\Model\Method\Cc
         if ($response->getResultCode() == self::RESPONSE_CODE_APPROVED) {
             $payment->setTransactionId($response->getPnref())
                 ->setIsTransactionClosed(1);
-            $payment->setShouldCloseParentTransaction(!$payment->getCreditmemo()->getInvoice()->canRefund());
+            $payment->setShouldCloseParentTransaction(true);
         }
         return $this;
     }

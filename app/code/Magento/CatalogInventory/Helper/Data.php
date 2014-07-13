@@ -151,7 +151,7 @@ class Data extends \Magento\App\Helper\AbstractHelper
     }
 
     /**
-     * Check if creditmemo items auto return option is enabled
+     * Check if items auto return option is enabled
      *
      * @return bool
      */

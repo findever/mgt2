@@ -579,18 +579,6 @@ abstract class AbstractMethod extends \Magento\Object
     }
 
     /**
-     * Set transaction ID into creditmemo for informational purposes
-     * @param \Magento\Sales\Model\Order\Creditmemo $creditmemo
-     * @param Payment $payment
-     * @return $this
-     */
-    public function processCreditmemo($creditmemo, $payment)
-    {
-        $creditmemo->setTransactionId($payment->getLastTransId());
-        return $this;
-    }
-
-    /**
      * Cancel payment abstract method
      *
      * @param \Magento\Object $payment

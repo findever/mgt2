@@ -34,7 +34,7 @@ use Magento\Catalog\Model\Product\Type\AbstractType;
 abstract class AbstractItems extends \Magento\Sales\Model\Order\Pdf\Items\AbstractItems
 {
     /**
-     * Getting all available childs for Invoice, Shipmen or Creditmemo item
+     * Getting all available childs for Invoice, Shipmen item
      *
      * @param \Magento\Object $item
      * @return array
@@ -48,8 +48,6 @@ abstract class AbstractItems extends \Magento\Sales\Model\Order\Pdf\Items\Abstra
             $items = $item->getInvoice()->getAllItems();
         } elseif ($item instanceof \Magento\Sales\Model\Order\Shipment\Item) {
             $items = $item->getShipment()->getAllItems();
-        } elseif ($item instanceof \Magento\Sales\Model\Order\Creditmemo\Item) {
-            $items = $item->getCreditmemo()->getAllItems();
         }
 
         if ($items) {

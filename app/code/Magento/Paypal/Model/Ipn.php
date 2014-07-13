@@ -609,13 +609,6 @@ class Ipn
 
         // TODO: there is no way to close a capture right now
 
-        $creditMemo = $payment->getCreatedCreditmemo();
-        if ($creditMemo) {
-            $creditMemo->sendEmail();
-            $this->_order->addStatusHistoryComment(
-                __('You notified customer about creditmemo #%1.', $creditMemo->getIncrementId())
-            )->setIsCustomerNotified(true)->save();
-        }
     }
 
     /**

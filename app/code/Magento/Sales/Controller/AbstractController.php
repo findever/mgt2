@@ -139,14 +139,6 @@ abstract class AbstractController extends \Magento\App\Action\Action
     }
 
     /**
-     * Creditmemo page
-     */
-    public function creditmemoAction()
-    {
-        $this->_viewAction();
-    }
-
-    /**
      * Action for reorder
      */
     public function reorderAction()
@@ -250,33 +242,4 @@ abstract class AbstractController extends \Magento\App\Action\Action
         }
     }
 
-    /**
-     * Print Creditmemo Action
-     */
-    public function printCreditmemoAction()
-    {
-        $creditmemoId = (int)$this->getRequest()->getParam('creditmemo_id');
-        if ($creditmemoId) {
-            $creditmemo = $this->_objectManager->create('Magento\Sales\Model\Order\Creditmemo')->load($creditmemoId);
-            $order = $creditmemo->getOrder();
-        } else {
-            $orderId = (int)$this->getRequest()->getParam('order_id');
-            $order = $this->_objectManager->create('Magento\Sales\Model\Order')->load($orderId);
-        }
-
-        if ($this->_canViewOrder($order)) {
-            $this->_coreRegistry->register('current_order', $order);
-            if (isset($creditmemo)) {
-                $this->_coreRegistry->register('current_creditmemo', $creditmemo);
-            }
-            $this->_view->loadLayout('print');
-            $this->_view->renderLayout();
-        } else {
-            if ($this->_objectManager->get('Magento\Customer\Model\Session')->isLoggedIn()) {
-                $this->_redirect('*/*/history');
-            } else {
-                $this->_redirect('sales/guest/form');
-            }
-        }
-    }
 }

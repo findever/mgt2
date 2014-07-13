@@ -31,9 +31,6 @@
         <page type="shipment">
             <renderer product_type="default">Magento\Sales\Model\Order\Pdf\Items\Shipment\DefaultShipment</renderer>
         </page>
-        <page type="creditmemo">
-            <renderer product_type="default">Magento\Sales\Model\Order\Pdf\Items\Creditmemo\DefaultCreditmemo</renderer>
-        </page>
     </renderers>
     <totals>
         <total name="subtotal">
