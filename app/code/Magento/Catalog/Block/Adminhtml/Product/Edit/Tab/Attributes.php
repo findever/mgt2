@@ -139,13 +139,6 @@ class Attributes extends \Magento\Catalog\Block\Adminhtml\Form
                 );
             }
 
-            $recurringProfile = $form->getElement('recurring_profile');
-            if ($recurringProfile) {
-                $recurringProfile->setRenderer(
-                    $this->getLayout()->createBlock('Magento\Catalog\Block\Adminhtml\Product\Edit\Tab\Price\Recurring')
-                );
-            }
-
             // Add new attribute controls if it is not an image tab
             if (!$form->getElement('media_gallery')
                 && $this->_authorization->isAllowed('Magento_Catalog::attributes_attributes')

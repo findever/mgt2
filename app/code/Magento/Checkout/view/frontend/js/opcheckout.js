@@ -512,7 +512,6 @@
             review: {
                 continueSelector: '#review-buttons-container .button',
                 container: '#opc-review',
-                agreementFormSelector:'#checkout-agreements input[type="checkbox"]',
                 submitContainer: '#checkout-review-submit'
             }
         },
@@ -538,7 +537,7 @@
                 $(this.options.payment.form).validation('isValid')) {
                 this._ajaxContinue(
                     this.options.review.saveUrl,
-                    $(this.options.payment.form).serialize() + '&' + $(this.options.review.agreementFormSelector).serialize());
+                    $(this.options.payment.form).serialize() );
             }
         }
     });

@@ -56,7 +56,6 @@ $_paymentBlock = $this->getLayout()->getBlock('checkout.onepage.payment');
                             activeSelector: '#opc-<?php echo $this->getActiveStep() ?>'
                         })
                         .opcheckout($.extend({
-                            checkoutAgreements: '#checkout-agreements',
                             checkoutProgressContainer: '#checkout-progress-wrapper',
                             methodDescription: '.items'
                             },

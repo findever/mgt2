@@ -1361,16 +1361,6 @@ class Product extends \Magento\Catalog\Model\AbstractModel
     }
 
     /**
-     * Whether the product is a recurring payment
-     *
-     * @return bool
-     */
-    public function isRecurring()
-    {
-        return $this->getIsRecurring() == '1';
-    }
-
-    /**
      * Alias for isSalable()
      *
      * @return bool

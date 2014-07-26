@@ -487,8 +487,7 @@ class Observer
         if (method_exists($controllerAction, 'redirectLogin')) {
             $this->messageManager->addNotice(__('To check out, please log in using your email address.'));
             $controllerAction->redirectLogin();
-            if ($controllerAction instanceof \Magento\GoogleCheckout\Controller\Redirect
-                || $controllerAction instanceof \Magento\Paypal\Controller\Express\AbstractExpress
+            if ($controllerAction instanceof \Magento\Paypal\Controller\Express\AbstractExpress
             ) {
                 $this->_customerSession
                     ->setBeforeAuthUrl($this->_url->getUrl('persistent/index/expressCheckout'));

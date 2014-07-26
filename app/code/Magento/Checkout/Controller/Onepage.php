@@ -315,8 +315,7 @@ class Onepage extends Action
 
         $lastQuoteId = $session->getLastQuoteId();
         $lastOrderId = $session->getLastOrderId();
-        $lastRecurringProfiles = $session->getLastRecurringProfileIds();
-        if (!$lastQuoteId || (!$lastOrderId && empty($lastRecurringProfiles))) {
+        if (!$lastQuoteId || (!$lastOrderId)) {
             $this->_redirect('checkout/cart');
             return;
         }
@@ -582,19 +581,6 @@ class Onepage extends Action
 
         $result = array();
         try {
-            $requiredAgreements = $this->_objectManager->get('Magento\Checkout\Helper\Data')->getRequiredAgreementIds();
-            if ($requiredAgreements) {
-                $postedAgreements = array_keys($this->getRequest()->getPost('agreement', array()));
-                $agreementsDiff = array_diff($requiredAgreements, $postedAgreements);
-                if ($agreementsDiff) {
-                    $result['success'] = false;
-                    $result['error'] = true;
-                    $result['error_messages'] = __('Please agree to all the terms and conditions before placing the order.');
-                    $this->getResponse()->setBody($this->_objectManager->get('Magento\Core\Helper\Data')->jsonEncode($result));
-                    return;
-                }
-            }
-
             $data = $this->getRequest()->getPost('payment', array());
             if ($data) {
                 $data['checks'] = \Magento\Payment\Model\Method\AbstractMethod::CHECK_USE_CHECKOUT

@@ -571,7 +571,6 @@ input[type="button"],
 .form.contact .actions .action,
 .wrapper.table + .actions .primary .action.share,
 .wrapper.table + .actions .primary .action.update,
-.recurring.order.details > .actions .primary .action,
 .form.send.confirmation .action.send,
 .action.myPrimary,
 input[type="submit"],
@@ -637,7 +636,6 @@ input[type="button"],
 .form.contact .actions .action,
 .wrapper.table + .actions .primary .action.share,
 .wrapper.table + .actions .primary .action.update,
-.recurring.order.details > .actions .primary .action,
 .form.send.confirmation .action.send {
   background-color: #da370a;
   color: #ffffff;
@@ -837,9 +835,6 @@ input[type="button"]:hover,
 .wrapper.table + .actions .primary .action.update:focus,
 .wrapper.table + .actions .primary .action.update:active,
 .wrapper.table + .actions .primary .action.update:hover,
-.recurring.order.details > .actions .primary .action:focus,
-.recurring.order.details > .actions .primary .action:active,
-.recurring.order.details > .actions .primary .action:hover,
 .form.send.confirmation .action.send:focus,
 .form.send.confirmation .action.send:active,
 .form.send.confirmation .action.send:hover {
@@ -1032,7 +1027,6 @@ input[type="reset"],
 .wrapper.table + .actions .primary .action.share,
 .wrapper.table + .actions .primary .action.update,
 .shipping-tracking-popup .action.close,
-.recurring.order.details > .actions .primary .action,
 .form.send.confirmation .action.send {
   border: none;
   border-radius: 0;
@@ -11749,52 +11743,6 @@ img[align="right"] {
   padding-bottom: 6px;
 }
 /*
-    My Account -> Recurring profiles
--------------------------------------- */
-.recurring.order.details .block.view.info {
-  *zoom: 1;
-}
-.recurring.order.details .block.view.info:before,
-.recurring.order.details .block.view.info:after {
-  content: "";
-  display: table;
-}
-.recurring.order.details .block.view.info:after {
-  clear: both;
-}
-.recurring.order.details .block.view.info .box {
-  float: left;
-  padding-right: 2%;
-  width: 48%;
-}
-.recurring.order.details .block.view.info .box .subtitle {
-  font-size: 20px;
-  font-weight: 200;
-  line-height: 1.2;
-  display: inline-block;
-  margin-bottom: 15px;
-}
-.recurring.order.details .block.view.info .box .content {
-  background: #f8f8f8;
-  padding: 30px;
-  *zoom: 1;
-}
-.recurring.order.details .block.view.info .box .content:before,
-.recurring.order.details .block.view.info .box .content:after {
-  content: "";
-  display: table;
-}
-.recurring.order.details .block.view.info .box .content:after {
-  clear: both;
-}
-.recurring.order.details .block.view.info .box .data.table th,
-.recurring.order.details .block.view.info .box .data.table td {
-  padding: 4px 7px;
-}
-.recurring.order.details > .actions .primary {
-  text-align: right;
-}
-/*
     My Account -> Send confirmation link
 -------------------------------------- */
 /*
@@ -13723,10 +13671,6 @@ img[align="right"] {
     margin-bottom: 20px;
   }
   .billing-agreements > .actions,
-  .recurring-profiles .buttons-set {
-    text-align: center;
-    margin-bottom: 20px;
-  }
   .block.account.nav .content {
     margin: 0 -20px;
   }

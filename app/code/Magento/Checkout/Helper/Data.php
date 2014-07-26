@@ -39,11 +39,6 @@ class Data extends \Magento\App\Helper\AbstractHelper
     const XML_PATH_CUSTOMER_MUST_BE_LOGGED = 'checkout/options/customer_must_be_logged';
 
     /**
-     * @var array|null
-     */
-    protected $_agreements = null;
-
-    /**
      * Core store config
      *
      * @var \Magento\Core\Model\Store\Config
@@ -66,11 +61,6 @@ class Data extends \Magento\App\Helper\AbstractHelper
     protected $_locale;
 
     /**
-     * @var \Magento\Checkout\Model\Resource\Agreement\CollectionFactory
-     */
-    protected $_agreementCollectionFactory;
-
-    /**
      * @var \Magento\Mail\Template\TransportBuilder
      */
     protected $_transportBuilder;
@@ -88,7 +78,6 @@ class Data extends \Magento\App\Helper\AbstractHelper
      * @param \Magento\Core\Model\StoreManagerInterface $storeManager
      * @param \Magento\Checkout\Model\Session $checkoutSession
      * @param \Magento\Core\Model\LocaleInterface $locale
-     * @param \Magento\Checkout\Model\Resource\Agreement\CollectionFactory $agreementCollectionFactory
      * @param \Magento\Mail\Template\TransportBuilder $transportBuilder
      * @param \Magento\TranslateInterface $translator
      */
@@ -98,7 +87,6 @@ class Data extends \Magento\App\Helper\AbstractHelper
         \Magento\Core\Model\StoreManagerInterface $storeManager,
         \Magento\Checkout\Model\Session $checkoutSession,
         \Magento\Core\Model\LocaleInterface $locale,
-        \Magento\Checkout\Model\Resource\Agreement\CollectionFactory $agreementCollectionFactory,
         \Magento\Mail\Template\TransportBuilder $transportBuilder,
         \Magento\TranslateInterface $translator
     ) {
@@ -106,7 +94,6 @@ class Data extends \Magento\App\Helper\AbstractHelper
         $this->_storeManager = $storeManager;
         $this->_checkoutSession = $checkoutSession;
         $this->_locale = $locale;
-        $this->_agreementCollectionFactory = $agreementCollectionFactory;
         $this->_transportBuilder = $transportBuilder;
         $this->_translator = $translator;
         parent::__construct($context);
@@ -149,24 +136,6 @@ class Data extends \Magento\App\Helper\AbstractHelper
     public function convertPrice($price, $format=true)
     {
         return $this->getQuote()->getStore()->convertPrice($price, $format);
-    }
-
-    /**
-     * @return array
-     */
-    public function getRequiredAgreementIds()
-    {
-        if (is_null($this->_agreements)) {
-            if (!$this->_coreStoreConfig->getConfigFlag('checkout/options/enable_agreements')) {
-                $this->_agreements = array();
-            } else {
-                $this->_agreements = $this->_agreementCollectionFactory->create()
-                    ->addStoreFilter($this->_storeManager->getStore()->getId())
-                    ->addFieldToFilter('is_active', 1)
-                    ->getAllIds();
-            }
-        }
-        return $this->_agreements;
     }
 
     /**
