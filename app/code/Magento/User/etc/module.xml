@@ -45,12 +45,10 @@
             <module name="Magento_CurrencySymbol"/>
             <module name="Magento_Customer"/>
             <module name="Magento_DesignEditor"/>
-            <module name="Magento_GoogleShopping"/>
             <module name="Magento_ImportExport"/>
             <module name="Magento_Index"/>
             <module name="Magento_Integration"/>
             <module name="Magento_Payment"/>
-            <module name="Magento_Paypal"/>
             <module name="Magento_Persistent"/>
             <module name="Magento_Rating"/>
             <module name="Magento_Reports"/>
