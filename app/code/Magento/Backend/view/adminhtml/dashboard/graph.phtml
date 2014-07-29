@@ -26,7 +26,7 @@
 ?>
 <div class="dashboard-diagram">
     <div class="store-switcher">
-        <label><?php echo __('Select Range') ?>:
+        <label>
             <select name="period" id="order_<?php echo $this->getHtmlId() ?>_period" onchange="changeDiagramsPeriod(this);">
                 <?php foreach ($this->helper('Magento\Backend\Helper\Dashboard\Data')->getDatePeriods() as $value => $label): ?>
                     <?php if(in_array($value, array('custom'))) continue; ?>

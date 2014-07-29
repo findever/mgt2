@@ -144,7 +144,7 @@ abstract class AbstractRenderer
             if ($this->getColumn()->getDir()) {
                 $className = 'sort-arrow-' . $dir;
             }
-            $out = '<a href="#" name="' . $this->getColumn()->getId() . '" title="' . $nDir
+            $out = '<a href="#" name="' . $this->getColumn()->getId() . '" title="' . __($nDir)
                 . '" class="' . $className . '">'.'<label class="sort-title" for='.$this->getColumn()->getHtmlId()
                 .'>'
                 . $this->getColumn()->getHeader().'</label></a>';
