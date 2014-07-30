@@ -11,6 +11,7 @@
 "Are you sure you want to delete current folder?","您确认要删除当前文件夹吗？"
 "Are you sure you want to delete the selected file?","您确认要删除已选择的文件吗？"
 "Block","区块"
+"Blocks","区块"
 "Block Information","块信息"
 "Block Title","区块标题"
 "CMS","CMS"
@@ -121,3 +122,4 @@
 "Unable to find a page to delete.","无法找到要删除的页面。"
 "WYSIWYG Options","WYSIWYG 选项"
 "px.","像素"
+"Elements","内容"

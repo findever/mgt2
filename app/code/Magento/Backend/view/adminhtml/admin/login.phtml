@@ -64,27 +64,26 @@
         <div class="wrapper-inner">
             <div class="form-login form-inline">
                 <header class="header">
-                    <div class="logo" title="<?php echo __('Magento Admin Panel') ?>"><span><?php echo __('Magento Admin Panel') ?></span></div>
+                    <div class="logo" title="后台管理"><span>后台管理</span></div>
                 </header>
                 <div id="messages" data-container-for="messages">
                     <?php echo $this->getLayout()->getMessagesBlock()->getGroupedHtml() ?>
                 </div>
                 <form method="post" action="" id="login-form" autocomplete="off">
                     <fieldset class="fieldset">
-                        <legend class="legend"><span><?php echo __('Welcome') ?></span></legend><br/>
                         <input name="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" />
                         <div class="field field-username">
-                            <label for="username" class="label"><span><?php echo __('User Name:') ?></span></label>
+                            <label for="username" class="label"><span>用户名：</span></label>
                             <div class="control">
-                                <input type="text" id="username" name="login[username]" value="" class="required-entry input-text" placeholder="user name" />
+                                <input type="text" id="username" name="login[username]" value="admin" class="required-entry input-text" placeholder="用户名" />
                             </div>
                         </div>
                         <div class="field field-password">
-                            <label for="login" class="label"><?php echo __('Password:') ?></label>
+                            <label for="login" class="label">密码：</label>
                             <div class="control">
                                 <!-- This is a dummy hidden field to trick firefox from auto filling the password -->
                                 <input type="text" class="input-text no-display" name="dummy" id="dummy" />
-                                <input type="password" id="login" name="login[password]" class="required-entry input-text" value="" placeholder="password" />
+                                <input type="password" id="login" name="login[password]" class="required-entry input-text" value="" placeholder="密码" />
                             </div>
                         </div>
                         <?php echo $this->getChildHtml('form.additional.info'); ?>
